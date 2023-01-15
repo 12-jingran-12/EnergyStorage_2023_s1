@@ -1,5 +1,5 @@
 # from tkinter.tix import Tree
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from Acquire_Data.extract_data_combination import *
 from Acquire_Data.Get_storage_data import *
 from Acquire_Data.algorithms import *
@@ -9,6 +9,7 @@ from Get_elec_price import *
 import numpy as np
 import json
 from files.spp import generate_rectangle_from_list
+from PHES_Main_Model.CostModel import InputParameters, PHESCostModel
 
 # Use Flask to build an app
 app = Flask(__name__)
@@ -24,24 +25,29 @@ calculation_pattern = '1'
 grid_distance = 0
 power_density = '1'
 isOnshore = True
-elec_price=0.176
+elec_price = 0.176
+
 
 # Different urls stand for different pages
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
 
+
 @app.route('/news')
 def news():
     return render_template('news.html')
+
 
 @app.route('/faq')
 def faq():
@@ -106,7 +112,7 @@ def energy_info():
         energy = result_dic3.get("Energy (GWh)")
         storage_time = result_dic3.get("Storage time (h)")
         country, country_code = get_country(lat_str, lon_str)
-        elec_price=get_elec_price(country_code)
+        elec_price = get_elec_price(country_code)
 
         global grid_distance
         grid_distance = findcloestpoint(lon, lat)
@@ -162,7 +168,7 @@ def get_method_args():
         print("user selection2")
         request_data = request.form
         project_term = request.form.get("project term")  # global project_term
-        itc_on_storage_ststem = request.form.get("itc_on_storage_ststem") # global itc_on_storage_ststem
+        itc_on_storage_ststem = request.form.get("itc_on_storage_ststem")  # global itc_on_storage_ststem
         sgip_eligible = request.form.get("sgip_eligible")  # global sgip_eligible
         in_state_supplier = request.form.get("in_state_supplier")  # global in_state_supplier
         saving_assumptions = request.form.get("saving_assumptions")  # global saving_assumptions
@@ -218,7 +224,7 @@ def calculate_wind_power_density():
                                                        sgip_eligible_bool, in_state_supplier_bool, int(sgip_step),
                                                        saving_assumptions)
             roi = calculate_roi_solar_no_storage(project_term=int(project_term), water_area=area_range,
-                                                 cost_per_sqm=247.5)/2
+                                                 cost_per_sqm=247.5) / 2
 
         if (calculation_pattern == '2'):
             irr = calculate_IRR_solar_with_pumped_hydro_model(arr_size_for_irr, int(project_term),
@@ -235,20 +241,26 @@ def calculate_wind_power_density():
                                                                  saving_assumptions)
             roi = calculate_roi_solar_with_battery(project_term=int(project_term), water_area=area_range,
                                                    cost_per_sqm=247.5)
-        
+
         if (calculation_pattern == '4'):
-            irr = calculate_irr_wind_no_storage(int(project_term), power_density,area = arr_size_for_irr,isOnshore=isOnshore)
-            roi = calculate_roi_wind_no_storage(int(project_term), power_density,area = arr_size_for_irr,isOnshore=isOnshore)
+            irr = calculate_irr_wind_no_storage(int(project_term), power_density, area=arr_size_for_irr,
+                                                isOnshore=isOnshore)
+            roi = calculate_roi_wind_no_storage(int(project_term), power_density, area=arr_size_for_irr,
+                                                isOnshore=isOnshore)
             # roi = roi/2
 
         if (calculation_pattern == '5'):
-            irr = calculate_irr_wind_with_pumped_hydro(int(project_term), power_density,area = arr_size_for_irr,isOnshore=isOnshore)
-            roi = calculate_roi_wind_with_pumped_hydro(int(project_term), power_density,area = arr_size_for_irr,isOnshore=isOnshore)
+            irr = calculate_irr_wind_with_pumped_hydro(int(project_term), power_density, area=arr_size_for_irr,
+                                                       isOnshore=isOnshore)
+            roi = calculate_roi_wind_with_pumped_hydro(int(project_term), power_density, area=arr_size_for_irr,
+                                                       isOnshore=isOnshore)
 
         if (calculation_pattern == '6'):
-            irr = calculate_irr_wind_with_battery(int(project_term), power_density,area = arr_size_for_irr,isOnshore=isOnshore)
-            roi = calculate_roi_wind_with_battery(int(project_term), power_density,area = arr_size_for_irr,isOnshore=isOnshore)
-        
+            irr = calculate_irr_wind_with_battery(int(project_term), power_density, area=arr_size_for_irr,
+                                                  isOnshore=isOnshore)
+            roi = calculate_roi_wind_with_battery(int(project_term), power_density, area=arr_size_for_irr,
+                                                  isOnshore=isOnshore)
+
         global grid_distance
         grid_distance = float(grid_distance)
         if (grid_distance >= 100 and grid_distance < 200):
@@ -367,8 +379,35 @@ def get_Optimized_Placement_list():
     return json_optimized_placement_list
 
 
-if __name__ == '__main__':
+# Get result of PHES model
+# http://127.0.0.1:5000/phes_results?exchange_rate_to_USD=0.7&power_rating=1000&stored_energy=24&water_to_rock=10&equity_fraction=0.3&equity_rate_of_return=0.1&bank_interest_rate=0.05&inflation_rate=0.015&energy_purchase_price=40&system_life=20&pumping_generating_cycles_annually=150&head=500&separation=5000
+@app.route("/phes_results", methods=["GET"])
+def calculate_phes_results():
+    try:
+        request_data = request.args.to_dict(flat=True)
+        inputs = InputParameters(request_data).get_parameters()
+        print(inputs)
+        cm = PHESCostModel(inputs)
+        cm.compute_result()
+        cm_result = cm.get_result()
+        result = {}
+        for key in cm_result.keys():
+            if key in ("reservoirs_to_capital", "tunnel_to_capital", "powerhouse_to_capital",
+                       "slope", "bank_debt_fraction", "nominal_discount_rate", "real_discount_rate",
+                       "npv_refurbishment_to_capital", "cost_to_benchmark", "irr", "roi", "annual_om_rate"):
+                result[key] = round(cm_result[key], 4) * 100
+            elif type(cm_result[key]) is str:
+                result[key] = cm_result[key]
+            elif type(cm_result[key]) is float or type(key) is int:
+                result[key] = round(cm_result[key], 0)
+            elif type(cm_result[key]) is tuple:
+                result[key] = round(cm_result[key][1], 0)
+        return jsonify({"code": "1", "msg": "success", "data": result})
+    except:
+        return jsonify({"code": "0", "msg": "failed"})
 
+
+if __name__ == '__main__':
     print("Loading finished")
     app.run(host='0.0.0.0', port=5000)
     # app.run(debug=True)
