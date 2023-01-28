@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{#    <script type="text/javascript" src="/eel.js"></script>#}
 
     <!-- side bar implement -->
     <style>
@@ -608,6 +609,7 @@ Debug phase _> change back to working versionn -->
             });
             map.add(hydro_layer);
             hydro_layer.visible = false;
+            has_button1 = true;
 
             //power_layer
             // power_layer = new WMSLayer({
@@ -1556,7 +1558,7 @@ Debug phase _> change back to working versionn -->
             id="refreshBtn">
         <i class="fa fa-refresh"></i> Refresh
     </button>
-        <div style="background:#c9e1ee;padding-bottom:65px;padding-left:0px" id="calculate_energy">
+        <div style="background:#c9e1ee;padding-bottom:65px;padding-left:0px;" id="calculate_energy">
             <p style="background:#c9e1ee ;font-weight:10;font-size:16px; color:#818181;padding:20px;padding-left:35px;margin-left:-20px;margin-top: -48px; ">
                 project term:
                 <input type="number" name="project term" id="effi"
@@ -1676,7 +1678,7 @@ Debug phase _> change back to working versionn -->
                 </select>
             </p>
         </div>
-        <div id="two_btn">
+        <div style="margin-top: 15px" id="two_btn">
             <div style="width:65px; overflow:hidden; background:#0084CC; padding:5px; margin-top:-50px; margin-bottom:35px; margin-left:20px; border-radius: 7px;">
                 <button type="submit" id="submitBtn" value="myValue">
                     <p title="Submit the value to be calculated."
@@ -1975,7 +1977,7 @@ Debug phase _> change back to working versionn -->
 
 
     <!-- ROI and IRR -->
-    <div style="margin-bottom: 30px" ;>
+    <div style="margin-bottom: 30px;margin-top: -20px"; id = "result_bar">
         <div>
             <p id="Investment"
                title="Estimated investment on your selected energy combination in your selected area."
@@ -2023,6 +2025,173 @@ Debug phase _> change back to working versionn -->
                title="Estimated internal rate of return on your selected energy combination in your selected area."
                style="background:#c9e1ee ;font-weight:bold;font-size: 20px; color:#282c34;padding: 35px;margin-left:-20px;margin-top: -25px ">
                 IRR
+        </div>
+    </div>
+
+    <div style="margin-bottom: 30px;margin-top: -20px;display: none" id = "storage_result_bar">
+        <div>
+            <p id="cost_power"
+               title="Estimated investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+               Capital Cost-power($/KW):
+        </div>
+
+        <div>
+            <p id="cost_energy"
+               title="Estimated battery cost on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Capital Cost-energy($/KWh):
+        </div>
+
+        <div>
+            <p id="cost"
+               title="Estimated battery install fee on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Capital Cost($ million):
+        </div>
+
+        <div>
+            <p id="cost_class"
+               title="Estimated energy capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Cost Class:
+        </div>
+
+        <div>
+            <p id="cost_reservoirs"
+               title="Estimated storage capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Cost-Reservoirs($ million):
+        </div>
+
+        <div>
+            <p id="cost_tunnel"
+               title="Estimated return of investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Cost-Tunnel($ million):
+        </div>
+
+        <div>
+            <p id="cost_powerhouse"
+               title="Estimated internal rate of return on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Cost-Powerhouse($ million):
+        </div>
+        <div>
+            <p id="total_reservoir_water_vol"
+               title="Estimated investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Total Reservoir Water Volume(Mm3):
+        </div>
+
+        <div>
+            <p id="available_reservoir_water_vol"
+               title="Estimated battery cost on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Available Reservoir Water Volume(Mm3):
+        </div>
+
+        <div>
+            <p id="rock_vol"
+               title="Estimated battery install fee on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Rock Volume(Mm3):
+        </div>
+
+        <div>
+            <p id="slope"
+               title="Estimated energy capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Slope(%):
+        </div>
+
+        <div>
+            <p id="hours_of_operation"
+               title="Estimated storage capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Hours of Operation at Full Power(h):
+        </div>
+
+        <div>
+            <p id="upper_reservoir_area"
+               title="Estimated return of investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Upper Reservoir Area(Ha):
+        </div>
+
+        <div>
+            <p id="annual_om"
+               title="Estimated internal rate of return on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                ANNUAL O&M(%):
+        </div>
+        <div>
+            <p id="annual_fixed"
+               title="Estimated investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Annual Fixed O&M($ million/MW):
+        </div>
+
+        <div>
+            <p id="annual_variable"
+               title="Estimated battery cost on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Annual Variable O&M($ million/MW):
+        </div>
+
+        <div>
+            <p id="annual_energy_purchase"
+               title="Estimated battery install fee on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Annual Energy Purchase(TWh):
+        </div>
+
+        <div>
+            <p id="annual_energy_sole"
+               title="Estimated energy capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Annual Energy Sold(TWh):
+        </div>
+
+        <div>
+            <p id="cost_to_purchase_lost_energy"
+               title="Estimated storage capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Cost to Purchase Lost Energy($/MWh):
+        </div>
+
+        <div>
+            <p id="capital_cost2"
+               title="Estimated return of investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Capital Cost($/MWh):
+        </div>
+
+        <div>
+            <p id="o&m_cost"
+               title="Estimated internal rate of return on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                O&M Cost($/MWh):
+        </div>
+        <div>
+            <p id="levelised_cost_of_storage"
+               title="Estimated storage capacity on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -25px ">
+                Levelised Cost of Storage(%/MWh):
+        </div>
+
+        <div>
+            <p id="ROI_storage"
+               title="Estimated return of investment on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 30px;margin-left:-17px;margin-top: -25px ">
+                ROI:
+        </div>
+
+        <div>
+            <p id="IRR_storage"
+               title="Estimated internal rate of return on your selected energy combination in your selected area."
+               style="background:#c9e1ee ;font-weight:bold;font-size: 15px; color:#282c34;padding: 10px;margin-left:3px;margin-top: -40px ">
+                IRR:
         </div>
     </div>
     <!-- Add icon library -->
@@ -3160,7 +3329,6 @@ Debug phase _> change back to working versionn -->
     function toWindMode() {
         show_mode = 2;
 
-
         document.getElementById("wind_m").style = "background-color: darkblue;";
         document.getElementById("solar_m").style = "background-color: rgb(81, 174, 211);";
         document.getElementById("storage_m").style = "background-color: rgb(81, 174, 211);";
@@ -3168,6 +3336,9 @@ Debug phase _> change back to working versionn -->
         document.getElementById("isOnshore").style.display = "block";
         document.getElementById("calculate_energy").style.display = "block";
         document.getElementById("two_btn").style.display = "inline";
+        document.getElementById("result_bar").style.display = "block";
+        document.getElementById("storage_result_bar").style.display="none";
+        document.getElementById("refreshBtn").style.display="block";
 
         // document.getElementById("calculate_energy").innerHTML = "";
         // var input1 = "<p style=\"background:#c9e1ee ;font-weight:10;font-size:16px; color:#818181; padding:20px; padding-left:35px;margin-left:-20px;margin-top: -48px\"> wind parameter1: <input type=\"text\" style=\"margin-top:20px; width:35px; height:25px;\"id=\"effi\" wrap=\"soft\" value=\"101\"></input> related unit </p > "
@@ -3187,7 +3358,6 @@ Debug phase _> change back to working versionn -->
     }
 
     function toSolarMode() {
-        show_mode = 1;
         document.getElementById("wind_m").style = "background-color: rgb(81, 174, 211);";
         document.getElementById("solar_m").style = "background-color: darkblue;";
         document.getElementById("storage_m").style = "background-color: rgb(81, 174, 211);";
@@ -3243,8 +3413,39 @@ Debug phase _> change back to working versionn -->
         document.getElementById("storage_m").style = "background-color: darkblue;";
 
         document.getElementById("calculate_energy").style.display = "none";
-        document.getElementById("two_btn").style.display = "none";
-
+        document.getElementById("refreshBtn").style.display="none";
+        document.getElementById("two_btn").style.display="none";
+        document.getElementById("result_bar").style.display = "none";
+        document.getElementById("storage_result_bar").style.display="block";
+        if (has_button1){
+           var storage_app_btn = document.createElement("input");
+           storage_app_btn.type = "button";
+           storage_app_btn.value = "Apply Loan";
+           storage_app_btn.style.width = "90px";
+           storage_app_btn.style.border = "none";
+           storage_app_btn.style.background = "#0084CC";
+           storage_app_btn.style.color = "white";
+           storage_app_btn.style.padding = "5px";
+           storage_app_btn.style.marginTop = "-100px";
+           storage_app_btn.style.marginBottom = "30px";
+           storage_app_btn.style.marginLeft = "15px";
+           storage_app_btn.style.borderRadius = "7px";
+           document.getElementById("storage_result_bar").insertBefore(storage_app_btn,document.getElementById("storage_result_bar").firstChild);
+           var storage_cal_btn = document.createElement("input");
+           storage_cal_btn.type = "button";
+           storage_cal_btn.value = "Calculate";
+           storage_cal_btn.style.width = "90px";
+           storage_cal_btn.style.border = "none"
+           storage_cal_btn.style.background = "#0084CC";
+           storage_cal_btn.style.color = "white";
+           storage_cal_btn.style.padding = "5px";
+           storage_cal_btn.style.marginTop = "-100px";
+           storage_cal_btn.style.marginBottom = "30px";
+           storage_cal_btn.style.marginLeft = "65px";
+           storage_cal_btn.style.borderRadius = "7px";
+           document.getElementById("storage_result_bar").insertBefore(storage_cal_btn,document.getElementById("storage_result_bar").firstChild);
+           has_button1 = false;
+        }
         // document.getElementById("calculate_energy").innerHTML = "";
         // var input1 = "<p style=\"background:#c9e1ee ;font-weight:10;font-size:16px; color:#282c34; padding:20px; padding-left:35px;margin-left:-20px;margin-top: -48px\"> Storage factor1: <input type=\"text\" style=\"margin-top:20px; width:35px; height:25px;\"id=\"effi\" wrap=\"soft\" value=\"301\"></input> related unit </p > "
         // var input2 = "<p style=\"background:#c9e1ee ;font-weight:10;font-size:16px; color:#282c34; padding:20px; padding-left:35px;margin-left:-20px;margin-top: -48px\"> Storage factor2: <input type=\"text\" style=\"margin-top:20px; width:35px; height:25px;\"id=\"effi\" wrap=\"soft\" value=\"302\"></input> related unit </p > "
@@ -3256,10 +3457,9 @@ Debug phase _> change back to working versionn -->
         // var inputs = input1 + input2 + input3 + input4 + input5 + input6;
         //
         // document.getElementById("calculate_energy").innerHTML = inputs;
-
-        document.getElementById("Data_for_10%_windiest_areas").innerHTML = "Class:<br> " + class_;
-        document.getElementById("Power_Density").innerHTML = "Storage head:<br> " + head_ + " m";
-        document.getElementById("Wind_Speed").innerHTML = "Separation:<br> " + separation + " km";
+        document.getElementById("Data_for_10%_windiest_areas").innerHTML = "Head(m): " + class_;
+        document.getElementById("Power_Density").innerHTML = "Separation(m): " + head_ ;
+        document.getElementById("Wind_Speed").innerHTML = "";
 
         var energy_info = document.getElementById("energy_info");
 
@@ -3267,13 +3467,49 @@ Debug phase _> change back to working versionn -->
         energy_info.innerHTML = "";
         energy_info.innerHTML =
             "\n" +
-            "        <p id=\"volume\"\n" +
-            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:20px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
-            "            Volume </p>\n" +
+            "        <p id=\"exchange_to_usd\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Exchange rate to USD(%): <input type='number' name='power_rating1' id='exchange_to_usd_value' value='0.66' step='0.01' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"power_rating\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Power Rating(MW): <input type='number' name='power_rating1' id='power_rating_value' value='1000.0' step='0.1' style='border: 1px solid;border-radius: 5px;width: 64px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"stored_energy\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Stored energy(GMh): <input type='number' name='power_rating1' id='stored_energy_value' value='24.0' step='0.1' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"equity_fraction\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Equity fraction(%): <input type='number' name='power_rating1' id='equity_fraction_value' value='0.30' step='0.01' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"equity_rate_of_return\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Equity rate of return(%): <input type='number' name='power_rating1' id='equity_rate_of_return_value' value='0.10' step='0.01' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"bank_interest_rate\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Bank interest rate(%): <input type='number' name='power_rating1' id='bank_interest_rate_value' value='0.05' step='0.01' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"inflation_rate\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Inflation rate(%): <input type='number' name='power_rating1' id='inflation_rate_value' value='0.015' step='0.001' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"energy_purchase_price\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Energy purchase price($/MWh): <input type='number' name='power_rating1' id='energy_purchase_price_value' value='40.0' step='0.1' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"system_life\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            System life(years): <input type='number' name='power_rating1' id='system_life_value' value='60.0' step='0.1' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n" +
+            "\n" +
+            "        <p id=\"pumping_generatting_cycles_anually\"\n" +
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Pumping generating cycles anually(%/year): <input type='number' name='power_rating1' id='pumping_cycles_value' value='150.00' step='0.01' style='border: 1px solid;border-radius: 5px;width: 64px;height: 20px;margin-right: 20px'> </p>\n" +
             "\n" +
             "        <p id=\"water_to_rock\"\n" +
-            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:20px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
-            "            Water to Rock </p>\n"
+            "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:12px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
+            "            Water to Rock(Pair): <input type='number' name='power_rating1' id='water_to_rock_value' value='18.48' step='0.01' style='border: 1px solid;border-radius: 5px;width: 57px;height: 20px;margin-right: 20px'> </p>\n"
         // "\n" +
         // "        <p id=\"storage_energy\"\n" +
         // "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:20px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
@@ -3282,9 +3518,68 @@ Debug phase _> change back to working versionn -->
         // "        <p id=\"storage_time\"\n" +
         // "           style=\"background:#ffffff ;font-weight:30; font-size: 16px; color:#282c34; padding:20px; padding-left: 35px; margin-left:-20px; margin-top: -20px \">\n" +
         // "            Storage Time </p>\n"
+        if(!has_button1){
+            storage_cal_btn.onclick = function calculate_storage_result(){
+                head_r = 14
+                separation_r = 20
+                const exchange_to_usd_r = document.getElementById("exchange_to_usd_value").value;
+                const power_rating_r = document.getElementById("power_rating_value").value;
+                const storage_energy_r = document.getElementById("stored_energy_value").value;
+                const equity_fraction_r = document.getElementById("equity_fraction_value").value;
+                const equity_rate_of_return_r = document.getElementById("equity_rate_of_return_value").value;
+                const bank_interest_rate_r = document.getElementById("bank_interest_rate_value").value;
+                const inflation_rate_r = document.getElementById("inflation_rate_value").value;
+                const energy_purchase_price_r = document.getElementById("energy_purchase_price_value").value;
+                const system_life_r = document.getElementById("system_life_value").value;
+                const pumping_generating_cycle_annully_r = document.getElementById("pumping_cycles_value").value;
+                const water_to_rock_r = document.getElementById("water_to_rock_value").value;
+                const url_1 = 'http://127.0.0.1:5001/phes_results?exchange_rate_to_USD='+exchange_to_usd_r+'&power_rating='+power_rating_r+'&stored_energy='+storage_energy_r+'&water_to_rock='+water_to_rock_r+'&equity_fraction='+equity_fraction_r+'&equity_rate_of_return='+equity_rate_of_return_r+'&bank_interest_rate='+bank_interest_rate_r+'&inflation_rate='+inflation_rate_r+'&energy_purchase_price='+energy_purchase_price_r+'&system_life='+system_life_r+'&pumping_generating_cycles_annually='+pumping_generating_cycle_annully_r+'&head=500&separation=5000'
+                 fetch(url_1, {
+                     method: 'GET'
+                 }).then(function (response) {
+                     return response.json();
+                 }).then(function (result) {
+                     console.log(result)
+                     document.getElementById("cost_power").innerHTML = "Capital Cost-power($/KW): "+result["data"]["power_capital_cost"];
+                     document.getElementById("cost_energy").innerHTML = "Capital Cost-energy($/KWh): "+result["data"]["energy_capital_cost"];
+                     document.getElementById("cost").innerHTML = "Capital Cost($ million): "+result["data"]["capital_cost"];
+                     document.getElementById("cost_class").innerHTML = "Cost Class: "+result["data"]["cost_class"];
+                     document.getElementById("cost_reservoirs").innerHTML = "Cost-Reservoirs($ million): "+result["data"]["reservoir_cost"];
+                     document.getElementById("cost_tunnel").innerHTML = "Cost-Tunnel($ million): "+result["data"]["tunnel_cost"];
+                     document.getElementById("cost_powerhouse").innerHTML = "Cost-Powerhouse($ million): "+result["data"]["powerhouse_cost"];
+                     document.getElementById("total_reservoir_water_vol").innerHTML = "Total Reservoir Water Volume(Mm3): "+result["data"]["total_reservoir_water_volume"];
+                     document.getElementById("available_reservoir_water_vol").innerHTML = "Available Reservoir Water Volume(Mm3): "+result["data"]["available_reservoir_water_volume"];
+                     document.getElementById("rock_vol").innerHTML = "Rock Volume(Mm3): "+result["data"]["rock_volume"];
+                     document.getElementById("slope").innerHTML = "Slope(%): "+result["data"]["slope"];
+                     document.getElementById("hours_of_operation").innerHTML = "Hours of Operation at Full Power(h): "+result["data"]["operation_hours"];
+                     document.getElementById("upper_reservoir_area").innerHTML = "Upper Reservoir Area(Ha): "+result["data"]["upper_reservoir_area"];
+                     document.getElementById("annual_om").innerHTML = "Annual O&M(%): "+result["data"]["annual_om_rate"];
+                     document.getElementById("annual_fixed").innerHTML = "Annual Fixed O&M($ million/MW): "+result["data"]["annual_fixed_om_pmw"];
+                     document.getElementById("annual_variable").innerHTML = "Annual Variable O&M($ million/MW): "+result["data"]["annual_variable_om_pmw"];
+                     document.getElementById("annual_energy_purchase").innerHTML = "Annual Energy Purchase(TWh): "+result["data"]["annual_energy_purchased"];
+                     document.getElementById("annual_energy_sole").innerHTML = "Annual Energy Sold(TWh): "+result["data"]["annual_energy_sold"];
+                     document.getElementById("cost_to_purchase_lost_energy").innerHTML = "Cost to Purchase Lost Energy($/MWh): "+result["data"]["cost_lost_energy_mwh"];
+                     document.getElementById("capital_cost2").innerHTML = "Capital Cost($/MWh): "+result["data"]["capital_cost_mwh"];
+                     document.getElementById("o&m_cost").innerHTML = "O&M Cost($/MWh): "+result["data"]["om_cost_mwh"];
+                     document.getElementById("levelised_cost_of_storage").innerHTML = "Levelised Cost of Storage(%/MWh): "+result["data"]["levelised_cost_of_storage_mwh"];
+                     document.getElementById("ROI_storage").innerHTML = "ROI: "+result["data"]["roi"];
+                     document.getElementById("IRR_storage").innerHTML = "IRR: "+result["data"]["irr"];
+                 })
 
-        document.getElementById("volume").innerHTML = "Volume:<br> " + volume + " GL";
-        document.getElementById("water_to_rock").innerHTML = "Water to Rock:<br> " + w_r + " Pair";
+
+
+            }
+        }
+        {#document.getElementById("power_rating").innerHTML = "Power Rating(MW): " + separation;#}
+        {#document.getElementById("stored_energy").innerHTML = "Stored Energy(GMH): " + volume;#}
+        {#document.getElementById("equity_fraction").innerHTML = "Equity Fraction(%): " + volume;#}
+        {#document.getElementById("equity_rate_of_return").innerHTML = "Equity Rate of Return(%): " + volume;#}
+        {#document.getElementById("bank_interest_rate").innerHTML = "Bank Interest Rate(%): " + volume;#}
+        {#document.getElementById("inflation_rate").innerHTML = "Inflation Rate(%): " + volume;#}
+        {#document.getElementById("energy_purchase_price").innerHTML = "Energy Purchase Price($/MWh): " + volume;#}
+        {#document.getElementById("system_life").innerHTML = "System Life(years): " + volume;#}
+        {#document.getElementById("pumping_generatting_cycles_anually").innerHTML = "Pumping Generating Cycles Anually(%/year): " + volume;#}
+        {#document.getElementById("water_to_rock").innerHTML = "Water to Rock(Pair): " + w_r;#}
         // document.getElementById("storage_energy").innerHTML = "Storage Energy:<br> " + energy_battery.toFixed(2) + " GWh";
         // document.getElementById("storage_time").innerHTML = "Storage Time:<br> " + storage_time.toFixed(2) + " h";
     }
@@ -3296,8 +3591,11 @@ Debug phase _> change back to working versionn -->
         document.getElementById("storage_m").style = "background-color: darkblue;";
 
 
-        document.getElementById("two_btn").style.display = "none";
+        document.getElementById("two_btn").style.display = "block";
         document.getElementById("calculate_energy").style.display = "none";
+        document.getElementById("result_bar").style.display = "block";
+        document.getElementById("storage_result_bar").style.display="none";
+        document.getElementById("refreshBtn").style.display="block";
 
 
         // document.getElementById("calculate_energy").innerHTML = "";

@@ -10,9 +10,11 @@ import numpy as np
 import json
 from files.spp import generate_rectangle_from_list
 from PHES_Main_Model.CostModel import InputParameters, PHESCostModel
+from flask_cors import CORS
 
 # Use Flask to build an app
 app = Flask(__name__)
+CORS(app, resources=r'/*')
 
 # area=1
 project_term = '1'
@@ -409,5 +411,5 @@ def calculate_phes_results():
 
 if __name__ == '__main__':
     print("Loading finished")
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)
     # app.run(debug=True)
