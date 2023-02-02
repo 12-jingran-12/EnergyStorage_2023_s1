@@ -412,22 +412,22 @@ def calculate_phes_results():
 
 @app.route("/get_head_separation", methods=["GET"])
 def calculate_head_separation():
-    # try:
-    request_data = request.args.to_dict(flat=True)
-    inputs = InputParameters(request_data).get_parameters()
-    print(inputs)
-    lats = inputs["lats"]
-    lons = inputs["lons"]
+    try:
+        request_data = request.args.to_dict(flat=True)
+        inputs = InputParameters(request_data).get_parameters()
+        print(inputs)
+        lats = inputs["lats"]
+        lons = inputs["lons"]
 
-    lats = lats[1: len(lats)-1].split(",")
-    lons = lons[1: len(lons)-1].split(",")
-    l1 = Location(float(lats[0]), float(lons[0]))
-    l2 = Location(float(lats[1]), float(lons[1]))
-    head = l1.get_head(l1.get_average_geocode(l2))
-    separation = l1.get_separation(l2)
-    return jsonify({"code": "1", "msg": "success", "data": {"head": head, "separation": separation}})
-    # except:
-    #     return jsonify({"code": "0", "msg": "failed"})
+        lats = lats[1: len(lats)-1].split(",")
+        lons = lons[1: len(lons)-1].split(",")
+        l1 = Location(float(lats[0]), float(lons[0]))
+        l2 = Location(float(lats[1]), float(lons[1]))
+        head = l1.get_head(l1.get_average_geocode(l2))
+        separation = l1.get_separation(l2)
+        return jsonify({"code": "1", "msg": "success", "data": {"head": head, "separation": separation}})
+    except:
+        return jsonify({"code": "0", "msg": "failed"})
 
 
 if __name__ == '__main__':

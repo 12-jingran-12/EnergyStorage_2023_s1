@@ -54,6 +54,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.main">
     <configuration name="test.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/EnergyStorage_2023_s1/EnergyStorage_2023_s1/templates/test.html" useBuiltInWebServerPort="true">
       <method v="2" />
@@ -127,7 +132,7 @@
       <workItem from="1674116757442" duration="13092000" />
       <workItem from="1674572382506" duration="1149000" />
       <workItem from="1674817690326" duration="13396000" />
-      <workItem from="1675009841920" duration="9162000" />
+      <workItem from="1675009841920" duration="9485000" />
     </task>
     <servers />
   </component>
