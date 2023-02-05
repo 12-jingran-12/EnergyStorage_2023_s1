@@ -418,7 +418,6 @@ def calculate_head_separation():
         print(inputs)
         lats = inputs["lats"]
         lons = inputs["lons"]
-
         lats = lats[1: len(lats)-1].split(",")
         lons = lons[1: len(lons)-1].split(",")
         l1 = Location(float(lats[0]), float(lons[0]))

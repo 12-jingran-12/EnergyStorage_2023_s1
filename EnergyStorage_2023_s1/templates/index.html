@@ -468,6 +468,8 @@ Debug phase _> change back to working versionn -->
         esriConfig = {locale: "en-US"};
         drawselection = 0;
         polygonlist = [];
+        storagepolygonlist = []
+        num_polygon = 0
         var lastpoint;
         // window.myChart;
        
@@ -517,6 +519,8 @@ Debug phase _> change back to working versionn -->
             gti = 0;
             class_ = 0;
             head_ = 0;
+            head_of_storage = 0;
+            separation_of_storage = 0;
             separation = 0;
             slope = 0;
             volume = 0;
@@ -710,14 +714,40 @@ Debug phase _> change back to working versionn -->
 
             view.on("double-click", function (evt) {
                 if (drawselection == 2) {
-                    drawpolygon();
-                    // update_value();
-                    drawselection = 0;
-                    // if (show_mode == 2) {
-                    area_value = calculatepolygonarea(polygonlist);
-                    // document.getElementById("area_a").value = area_value;
-                    // }
-                    showPopup_polygon(get_polygon_centroid(polygonlist));//null
+                    if (show_mode == 3){
+                        drawpolygon();
+                        if (num_polygon == 1){
+                            drawpolygon1(storagepolygonlist)
+                        }
+                        storagepolygonlist.push(polygonlist)
+                        drawselection = 0;
+                        num_polygon += 1;
+                        polygonlist=[]
+                        if (storagepolygonlist.length == 2){
+                            drawheadline(get_polygon_centroid(storagepolygonlist[0]), get_polygon_centroid(storagepolygonlist[1]))
+                            fetch("http://127.0.0.1:5001/get_head_separation?lats=["+get_polygon_centroid(storagepolygonlist[0])[1]+","+get_polygon_centroid(storagepolygonlist[1])[1]+"]&lons=["+get_polygon_centroid(storagepolygonlist[0])[0]+","+get_polygon_centroid(storagepolygonlist[1])[0]+"]", {
+                                method: 'GET'
+                            }).then(function (response) {
+                                return response.json();
+                            }).then(function (result) {
+                                head_of_storage = result["data"]["head"]
+                                separation_of_storage = result["data"]["separation"]
+                                toStorageMode();
+                            })
+
+                        }
+                        lastpoint = null;
+                    }
+                    else {
+                        drawpolygon();
+                        // update_value();
+                        drawselection = 0;
+                        // if (show_mode == 2) {
+                        area_value = calculatepolygonarea(polygonlist);
+                        // document.getElementById("area_a").value = area_value;
+                        // }
+                        showPopup_polygon(get_polygon_centroid(polygonlist));//null
+                    }
                 }
             });
 
@@ -731,9 +761,12 @@ Debug phase _> change back to working versionn -->
             view.on("click", function (evt) {
                 search.clear();
                 view.popup.clear();
+                if (num_polygon == 1 && show_mode == 3){
+                    drawselection = 2
+                }
                 if (drawselection == 2) {
                     lastpoint = [evt.mapPoint.longitude, evt.mapPoint.latitude];
-                    polygonlist.push([evt.mapPoint.longitude, evt.mapPoint.latitude]);
+                    polygonlist.push([evt.mapPoint.longitude, evt.mapPoint.latitude])
 
                 }
                 if (drawselection == 1) {
@@ -868,6 +901,17 @@ Debug phase _> change back to working versionn -->
                 return Math.abs(a / 2);
             }
 
+            function get_head_separation(pt1, pt2){
+                 fetch("http://127.0.0.1:5001/get_head_separation?lats=["+pt1[1]+","+pt2[1]+"]&lons=["+pt1[0]+","+pt2[0]+"]", {
+                     method: 'GET'
+                 }).then(function (response) {
+                     return response.json();
+                 }).then(function (result) {
+                     head_of_storage = result["data"]["head"]
+                     separation_of_storage = result["data"]["separation"]
+                 })
+            }
+
             //new calculation ends
 
 
@@ -952,6 +996,34 @@ Debug phase _> change back to working versionn -->
                 showPopUpSideBar();
             }
 
+            function drawpolygon1(storage_list) {
+                var polygon = new Polygon({
+                    rings: storage_list[0]
+                });
+
+                // Create a symbol for rendering the graphic
+                var fillSymbol = new SimpleFillSymbol({
+                    color: [227, 139, 79, 0.8],
+                    outline: {
+                        color: [255, 255, 255],
+                        width: 1
+                    }
+                });
+                // Add the geometry and symbol to a new graphic
+                var polygonGraphic = new Graphic({
+                    geometry: polygon,
+                    symbol: fillSymbol
+                });
+                // Add the graphic to the view
+                view.graphics.add(polygonGraphic);
+                // <form name="form" method="post" onsubmit="return check()">
+                //     <input type="text" name="name" id="name"/>
+                //     <input type="submit" value="提交" />
+                // </form>
+                // showPopup_point(polygonlist[0])
+                showPopUpSideBar()
+            }
+
             function showPopUpSideBar() {
                 document.getElementById("popUpForPlacingPanel").style.display = "block";
             }
@@ -959,6 +1031,10 @@ Debug phase _> change back to working versionn -->
 
             function drawline(pt) {
                 view.graphics.removeAll();
+                if (num_polygon == 1 && show_mode ==3){
+                    drawpolygon1(storagepolygonlist)
+                }
+
                 if (lastpoint == null) {
                 } else {
                     var polyline = new Polyline({
@@ -980,6 +1056,27 @@ Debug phase _> change back to working versionn -->
                     // Add the graphic to the view
                     view.graphics.add(polylineGraphic);
                 }
+            }
+
+            function drawheadline(pt1, pt2) {
+                var polyline = new Polyline({
+                        paths: [
+                            [pt1[0], pt1[1]],
+                            [pt2[0], pt2[1]]
+                        ]
+                    });
+                    // Create a symbol for drawing the line
+                    var lineSymbol = new SimpleLineSymbol({
+                        color: [255, 255, 255],
+                        width: 2
+                    });
+                    // Create a line graphic
+                    var polylineGraphic = new Graphic({
+                        geometry: polyline,
+                        symbol: lineSymbol
+                    })
+                    // Add the graphic to the view
+                    view.graphics.add(polylineGraphic);
             }
 
             function drawPoint(pt) {
@@ -3149,9 +3246,16 @@ Debug phase _> change back to working versionn -->
         console.log("B")
         console.log(drawselection)
         if (drawselection != 2) {
-            drawselection = 2;
-            clearall();
-            reset_fields();
+            if (show_mode==3){
+                drawselection = 2;
+                clearall();
+                reset_fields_understorage();
+            }
+            else {
+                drawselection = 2;
+                clearall();
+                reset_fields();
+            }
         }
     }
 
@@ -3168,7 +3272,12 @@ Debug phase _> change back to working versionn -->
         addPanelState = 0;
         deletePanel();
         hidePopUpSideBar();
-        reset_fields();
+        if (show_mode == 3){
+            reset_fields_understorage()
+        }
+        else {
+            reset_fields();
+        }
         document.getElementById("Investment").innerHTML = "Est. Investment:<br> ";
         document.getElementById("ROI").innerHTML = "ROI:<br> " ;
         document.getElementById("IRR").innerHTML = "IRR:<br> " ;
@@ -3220,6 +3329,8 @@ Debug phase _> change back to working versionn -->
         class_ = 0;
         head_ = 0;
         separation = 0;
+        head_of_storage = 0;
+        separation_of_storage = 0;
         slope = 0;
         volume = 0;
         w_r = 0;
@@ -3304,11 +3415,52 @@ Debug phase _> change back to working versionn -->
         }
     }
 
+    function reset_fields_understorage(){
+        efficiency = 100;
+        area_value = 1;
+        poe = 0.3441;
+        year = 5;
+        cost_value = 45.74;
+        solar_e = 0;
+        wind_e = 0;
+        speed_w = 0;
+        power_d = 0;
+        pvout = 0;
+        dni = 0;
+        ghi = 0;
+        dif = 0;
+        gti = 0;
+        class_ = 0;
+        head_ = 0;
+        separation = 0;
+        head_of_storage = 0;
+        separation_of_storage = 0;
+        slope = 0;
+        volume = 0;
+        w_r = 0;
+        energy_battery = 0;
+        storage_time = 0;
+        power_storage = 0;
+        country = " ";
+        panel_capacity = 150;
+        // 150 200 selection TBD
+        number_of_wind_turbine = 1;
+        //horizontal pi r^2
+        radius_of_wind_turbine = 25;
+        equipment_cost = 0;
+        // equipment cost 40,000 +45.74*area
+        // 8= 10kw wind turbine cost 500000, radius=22.5
+        lastpt = null;
+        calculationpoint = null;
+    }
+
     function clearall() {
         lastpoint = null;
         polygonlist = [];
         view.graphics.removeAll();
         view.popup.close();
+        storagepolygonlist = [];
+        num_polygon=0;
     }
 
     function change_base_map() {
@@ -3457,8 +3609,8 @@ Debug phase _> change back to working versionn -->
         // var inputs = input1 + input2 + input3 + input4 + input5 + input6;
         //
         // document.getElementById("calculate_energy").innerHTML = inputs;
-        document.getElementById("Data_for_10%_windiest_areas").innerHTML = "Head(m): " + class_;
-        document.getElementById("Power_Density").innerHTML = "Separation(m): " + head_ ;
+        document.getElementById("Data_for_10%_windiest_areas").innerHTML = "Head(m): " + head_of_storage;
+        document.getElementById("Power_Density").innerHTML = "Separation(m): " + separation_of_storage ;
         document.getElementById("Wind_Speed").innerHTML = "";
 
         var energy_info = document.getElementById("energy_info");
@@ -3520,8 +3672,6 @@ Debug phase _> change back to working versionn -->
         // "            Storage Time </p>\n"
         if(!has_button1){
             storage_cal_btn.onclick = function calculate_storage_result(){
-                head_r = 14
-                separation_r = 20
                 const exchange_to_usd_r = document.getElementById("exchange_to_usd_value").value;
                 const power_rating_r = document.getElementById("power_rating_value").value;
                 const storage_energy_r = document.getElementById("stored_energy_value").value;
@@ -3533,13 +3683,12 @@ Debug phase _> change back to working versionn -->
                 const system_life_r = document.getElementById("system_life_value").value;
                 const pumping_generating_cycle_annully_r = document.getElementById("pumping_cycles_value").value;
                 const water_to_rock_r = document.getElementById("water_to_rock_value").value;
-                const url_1 = 'http://127.0.0.1:5001/phes_results?exchange_rate_to_USD='+exchange_to_usd_r+'&power_rating='+power_rating_r+'&stored_energy='+storage_energy_r+'&water_to_rock='+water_to_rock_r+'&equity_fraction='+equity_fraction_r+'&equity_rate_of_return='+equity_rate_of_return_r+'&bank_interest_rate='+bank_interest_rate_r+'&inflation_rate='+inflation_rate_r+'&energy_purchase_price='+energy_purchase_price_r+'&system_life='+system_life_r+'&pumping_generating_cycles_annually='+pumping_generating_cycle_annully_r+'&head=500&separation=5000'
+                const url_1 = 'http://127.0.0.1:5001/phes_results?exchange_rate_to_USD='+exchange_to_usd_r+'&power_rating='+power_rating_r+'&stored_energy='+storage_energy_r+'&water_to_rock='+water_to_rock_r+'&equity_fraction='+equity_fraction_r+'&equity_rate_of_return='+equity_rate_of_return_r+'&bank_interest_rate='+bank_interest_rate_r+'&inflation_rate='+inflation_rate_r+'&energy_purchase_price='+energy_purchase_price_r+'&system_life='+system_life_r+'&pumping_generating_cycles_annually='+pumping_generating_cycle_annully_r+'&head='+head_of_storage+'&separation='+separation_of_storage
                  fetch(url_1, {
                      method: 'GET'
                  }).then(function (response) {
                      return response.json();
                  }).then(function (result) {
-                     console.log(result)
                      document.getElementById("cost_power").innerHTML = "Capital Cost-power($/KW): "+result["data"]["power_capital_cost"];
                      document.getElementById("cost_energy").innerHTML = "Capital Cost-energy($/KWh): "+result["data"]["energy_capital_cost"];
                      document.getElementById("cost").innerHTML = "Capital Cost($ million): "+result["data"]["capital_cost"];

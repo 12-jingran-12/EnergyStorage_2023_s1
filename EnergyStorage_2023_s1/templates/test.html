@@ -7,13 +7,12 @@
 <body>
     <h1>发送get请求并且发送参数</h1>
     <script>
-        fetch('http://127.0.0.1:5001/phes_results?exchange_rate_to_USD='+0.7+'&power_rating=1000&stored_energy=24&water_to_rock=10&equity_fraction=0.3&equity_rate_of_return=0.1&bank_interest_rate=0.05&inflation_rate=0.015&energy_purchase_price=40&system_life=20&pumping_generating_cycles_annually=150&head=500&separation=5000', {
-            method: 'GET'
-            }).then(function (response) {
-                return response.json();
-            }).then(function (result) {
-                console.log(result["data"]["roi"])
-            })
+        list = []
+        l=[1,2,4,6]
+        p=[1,3,5,7]
+        list.push([l])
+        list.push([p])
+        console.log(list)
     </script>
 </body>
 </html>

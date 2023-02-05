@@ -125,8 +125,8 @@ class Location:
 
 
 if __name__ == '__main__':
-    l1 = Location(22.518543650905375, 114.05387367899392)
-    l2 = Location(34.2253171, 108.9426205)
+    l1 = Location(1.5782065575090678, 108.62547847458541)
+    l2 = Location(34.2253171, -108.9426205)
     print(l1.get_separation(l2))
     print(l1.get_head(l1.get_average_geocode(l2)))
 
