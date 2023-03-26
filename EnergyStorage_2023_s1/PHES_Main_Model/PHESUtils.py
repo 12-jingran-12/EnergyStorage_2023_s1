@@ -24,7 +24,7 @@ class Location:
         return [lon, lat]
 
     def get_head(self, l):
-        api_key = "AIzaSyBOg3mbFMqox4CbDiYl1Y5uyLYuHCJc_bA"
+        api_key = ""
         client = googlemaps.Client(api_key)
 
         l1 = (self.lat, self.lon)
