@@ -8,10 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/EnergyStorage_2023_s1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EnergyStorage_2023_s1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model/CostModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model/CostModel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model/PHESUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model/PHESUtils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EnergyStorage_2023_s1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/EnergyStorage_2023_s1/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EnergyStorage_2023_s1/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/EnergyStorage_2023_s1/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EnergyStorage_2023_s1/templates/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/EnergyStorage_2023_s1/templates/test.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,15 +46,10 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
@@ -64,6 +57,28 @@
   </component>
   <component name="RunManager" selected="Python.main">
     <configuration name="test.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/EnergyStorage_2023_s1/EnergyStorage_2023_s1/templates/test.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="CostModel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EnergyStorage_2023_s1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model/CostModel.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="PHESUtils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -95,9 +110,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="/opt/anaconda3/envs/EnergyStorageRight/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/EnergyStorage_2023_s1" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
@@ -113,6 +128,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.CostModel" />
         <item itemvalue="Python.PHESUtils" />
         <item itemvalue="JavaScript Debug.test.html" />
       </list>
@@ -138,6 +154,9 @@
       <workItem from="1675009841920" duration="9485000" />
       <workItem from="1675510658718" duration="3000" />
       <workItem from="1675510690513" duration="14128000" />
+      <workItem from="1675949160784" duration="594000" />
+      <workItem from="1677066977566" duration="234000" />
+      <workItem from="1679837568138" duration="1998000" />
     </task>
     <servers />
   </component>
@@ -156,9 +175,10 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PHES$main.coverage" NAME="main Coverage Results" MODIFIED="1675318638123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1" />
-    <SUITE FILE_PATH="coverage/PHES$PHESUtils.coverage" NAME="PHESUtils Coverage Results" MODIFIED="1675318610741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
     <SUITE FILE_PATH="coverage/EnergyStorage_2023_s1$PHESUtils.coverage" NAME="PHESUtils Coverage Results" MODIFIED="1675595817426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
+    <SUITE FILE_PATH="coverage/PHES$main.coverage" NAME="main Coverage Results" MODIFIED="1679839941606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1" />
     <SUITE FILE_PATH="coverage/EnergyStorage_2023_s1$main.coverage" NAME="main Coverage Results" MODIFIED="1675596910217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1" />
+    <SUITE FILE_PATH="coverage/PHES$CostModel.coverage" NAME="CostModel Coverage Results" MODIFIED="1679839933919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
+    <SUITE FILE_PATH="coverage/PHES$PHESUtils.coverage" NAME="PHESUtils Coverage Results" MODIFIED="1679839245600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EnergyStorage_2023_s1/PHES_Main_Model" />
   </component>
 </project>

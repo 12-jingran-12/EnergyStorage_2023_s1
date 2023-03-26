@@ -4,6 +4,12 @@
 
 import numpy as np
 import numpy_financial as npf
+import sys
+import logging
+import os
+# 把当前文件所在文件夹的父文件夹路径加入到PYTHONPATH
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from PHES_Main_Model.DefualtParameters import *
 
 

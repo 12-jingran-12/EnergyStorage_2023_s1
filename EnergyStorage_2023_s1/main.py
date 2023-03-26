@@ -422,7 +422,7 @@ def calculate_head_separation():
         lons = lons[1: len(lons)-1].split(",")
         l1 = Location(float(lats[0]), float(lons[0]))
         l2 = Location(float(lats[1]), float(lons[1]))
-        head = l1.get_head(l1.get_average_geocode(l2))
+        head = l1.get_head(l2)
         separation = l1.get_separation(l2)
         return jsonify({"code": "1", "msg": "success", "data": {"head": head, "separation": separation}})
     except:
