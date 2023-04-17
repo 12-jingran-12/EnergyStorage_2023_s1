@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 import json
-import reverse_geocode
+
 # import geocoder
 from geopy.geocoders import Nominatim
 from geopy.point import Point

@@ -725,7 +725,7 @@ Debug phase _> change back to working versionn -->
                         polygonlist=[]
                         if (storagepolygonlist.length == 2){
                             drawheadline(get_polygon_centroid(storagepolygonlist[0]), get_polygon_centroid(storagepolygonlist[1]))
-                            fetch("http://127.0.0.1:5001/get_head_separation?lats=["+get_polygon_centroid(storagepolygonlist[0])[1]+","+get_polygon_centroid(storagepolygonlist[1])[1]+"]&lons=["+get_polygon_centroid(storagepolygonlist[0])[0]+","+get_polygon_centroid(storagepolygonlist[1])[0]+"]", {
+                            fetch("/get_head_separation?lats=["+get_polygon_centroid(storagepolygonlist[0])[1]+","+get_polygon_centroid(storagepolygonlist[1])[1]+"]&lons=["+get_polygon_centroid(storagepolygonlist[0])[0]+","+get_polygon_centroid(storagepolygonlist[1])[0]+"]", {
                                 method: 'GET'
                             }).then(function (response) {
                                 return response.json();
