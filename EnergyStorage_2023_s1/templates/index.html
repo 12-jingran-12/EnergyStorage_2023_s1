@@ -3683,7 +3683,7 @@ Debug phase _> change back to working versionn -->
                 const system_life_r = document.getElementById("system_life_value").value;
                 const pumping_generating_cycle_annully_r = document.getElementById("pumping_cycles_value").value;
                 const water_to_rock_r = document.getElementById("water_to_rock_value").value;
-                const url_1 = 'http://127.0.0.1:5001/phes_results?exchange_rate_to_USD='+exchange_to_usd_r+'&power_rating='+power_rating_r+'&stored_energy='+storage_energy_r+'&water_to_rock='+water_to_rock_r+'&equity_fraction='+equity_fraction_r+'&equity_rate_of_return='+equity_rate_of_return_r+'&bank_interest_rate='+bank_interest_rate_r+'&inflation_rate='+inflation_rate_r+'&energy_purchase_price='+energy_purchase_price_r+'&system_life='+system_life_r+'&pumping_generating_cycles_annually='+pumping_generating_cycle_annully_r+'&head='+head_of_storage+'&separation='+separation_of_storage
+                const url_1 = '/phes_results?exchange_rate_to_USD='+exchange_to_usd_r+'&power_rating='+power_rating_r+'&stored_energy='+storage_energy_r+'&water_to_rock='+water_to_rock_r+'&equity_fraction='+equity_fraction_r+'&equity_rate_of_return='+equity_rate_of_return_r+'&bank_interest_rate='+bank_interest_rate_r+'&inflation_rate='+inflation_rate_r+'&energy_purchase_price='+energy_purchase_price_r+'&system_life='+system_life_r+'&pumping_generating_cycles_annually='+pumping_generating_cycle_annully_r+'&head='+head_of_storage+'&separation='+separation_of_storage
                  fetch(url_1, {
                      method: 'GET'
                  }).then(function (response) {
