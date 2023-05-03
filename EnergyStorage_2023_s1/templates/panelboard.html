@@ -639,10 +639,10 @@
             //basemap: 'statellite',
             basemap: localStorage.getItem("key"),
             //basemap:'topo-vector',
-            
-            
-            
-    
+
+
+
+
         });
         if (map.basemap == null){
             map = new Map({
@@ -809,7 +809,7 @@
 
         function getcookie() {
             //获取传递过来的localStorage
-            // 	console.log(window.localStorage.getItem('list'))
+            {#console.log(window.localStorage.getItem('list'))#}
             var ck = document.cookie.split(",");
             for (var i = 0; i < ck.length; i += 2) {
                 var arr1 = ck[i];

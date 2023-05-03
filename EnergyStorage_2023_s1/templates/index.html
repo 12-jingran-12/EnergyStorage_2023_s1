@@ -3520,6 +3520,8 @@ Debug phase _> change back to working versionn -->
         document.getElementById("calculate_energy").style.display = "block";
         document.getElementById("two_btn").style.display = "inline";
         document.getElementById("refreshBtn").style.display = "inline";
+        document.getElementById("storage_result_bar").style.display="none";
+        document.getElementById("result_bar").style.display = "block";
 
         // document.getElementById("calculate_energy").innerHTML = "";
         //
@@ -3714,6 +3716,9 @@ Debug phase _> change back to working versionn -->
                      document.getElementById("ROI_storage").innerHTML = "ROI: "+result["data"]["roi"];
                      document.getElementById("IRR_storage").innerHTML = "IRR: "+result["data"]["irr"];
                  })
+                }
+                storage_app_btn.onclick = function show(){
+                    document.getElementById("background").style.display = "block";
 
 
 
